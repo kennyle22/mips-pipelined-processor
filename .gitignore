@@ -1,0 +1,30 @@
+# Vivado generated files
+*.jou
+*.log
+*.str
+*.xml
+*.pb
+.Xil/
+vivado_*.backup.jou
+vivado_*.backup.log
+
+# Vivado project files (regenerate from TCL)
+*.xpr
+*.xsa
+*.bit
+*.ltx
+*.runs/
+*.cache/
+*.ip_user_files/
+*.sim/
+*.hw/
+*.os/
+
+# Simulation output
+sim/out
+sim/*.vcd
+sim/*.lxt
+
+# OS
+.DS_Store
+Thumbs.db
