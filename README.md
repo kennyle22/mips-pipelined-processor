@@ -1,40 +1,37 @@
-# MIPS Pipelined Processor
+# mips-pipelined-processor
 
-A 32-bit MIPS pipelined processor implemented in Verilog, synthesized on an Artix-7 FPGA using Xilinx Vivado.
+32-bit MIPS processor written in Verilog, synthesized on an Artix-7 FPGA using Vivado. Built for a computer architecture lab at UCI.
 
-## Features
+## What's in here
 
-- Full 5-stage pipeline: IF → ID → EX → MEM → WB
-- Data forwarding unit to resolve RAW hazards without stalling
-- Hazard detection unit for load-use stall insertion
-- Supports R-type, I-type, Load/Store, Branch, and Jump instructions
-- Parameterized pipeline register modules
+5-stage pipeline: IF, ID, EX, MEM, WB. Data forwarding handles most RAW hazards without stalling — load-use hazards still require a one-cycle bubble, which the hazard detection unit inserts. Branch resolution is at the EX/MEM boundary. Supported instructions: R-type, I-type, load/store, branch, and jump.
 
-## Resource Utilization (Artix-7 xc7a100tcsg324-1)
+## Resource utilization (Artix-7 xc7a100tcsg324-1)
 
 | Resource | Used | Available |
 |----------|------|-----------|
-| LUT | 2318 | 41000 |
-| FF | 1297 | 82000 |
-| DSP | 3 | 240 |
-| IO | 34 | 300 |
+| LUT      | 2318 | 41000     |
+| FF       | 1297 | 82000     |
+| DSP      | 3    | 240       |
+| IO       | 34   | 300       |
 
-## Project Structure
+## Timing
+
+Constrained to 50 MHz (20 ns). Timing closure was not met. The critical path runs through the EX stage — forwarding MUX to ALU to Zero flag — and didn't fit within the period. Functional simulation passes; closing timing on hardware would mean either breaking the EX stage across an extra register or relaxing the constraint.
+
+## Project structure
 
 ```
 src/
-├── top/          — Top-level mips_32 module
-├── stages/       — IF, ID, EX, MEM, WB stage modules
-├── pipeline_regs/— Pipeline register modules (IF/ID, ID/EX, EX/MEM, MEM/WB)
-├── units/        — ALU, control unit, forwarding unit, hazard detection
-└── memory/       — Instruction ROM, data RAM
-sim/              — Testbenches and test programs (hex)
-constraints/      — Vivado timing constraints (.xdc)
-vivado/           — TCL project setup script
+├── top/            — top-level mips_32 module
+├── stages/         — IF, ID, EX, MEM, WB
+├── pipeline_regs/  — IF/ID, ID/EX, EX/MEM, MEM/WB registers
+├── units/          — ALU, control unit, forwarding unit, hazard detection
+└── memory/         — instruction ROM, data RAM
+sim/                — testbenches and test programs (hex)
+constraints/        — Vivado timing constraints (.xdc)
 ```
 
 ## Tools
 
-- **Simulator:** Icarus Verilog / Xilinx Vivado xsim
-- **Synthesis:** Xilinx Vivado
-- **Target FPGA:** Artix-7 (xc7a100tcsg324-1)
+Icarus Verilog and Vivado xsim for simulation. Vivado for synthesis and implementation.
