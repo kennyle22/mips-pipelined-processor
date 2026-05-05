@@ -1,9 +1,9 @@
+// Critical path for timing: forwarding MUX -> ALU -> Zero flag.
+// Timing closure was not met at 50 MHz on Artix-7; see constraints/timing.xdc.
 module EX_pipe_stage (
-    // Control signals from ID/EX
     input        RegDst,
     input        ALUSrc,
     input  [1:0] ALUOp,
-    // Data from ID/EX
     input  [31:0] ReadData1,
     input  [31:0] ReadData2,
     input  [31:0] SignImm,
@@ -11,14 +11,12 @@ module EX_pipe_stage (
     input  [4:0]  shamt,
     input  [5:0]  funct,
     input  [5:0]  opcode,
-    // Forwarding inputs
     input  [31:0] EX_MEM_ALUResult,
     input  [31:0] MEM_WB_WriteData,
     input  [4:0]  EX_MEM_Rd,
     input  [4:0]  MEM_WB_Rd,
     input         EX_MEM_RegWrite,
     input         MEM_WB_RegWrite,
-    // Outputs
     output [31:0] ALUResult,
     output        Zero,
     output [31:0] WriteDataOut,   // forwarded rt value (for SW)
