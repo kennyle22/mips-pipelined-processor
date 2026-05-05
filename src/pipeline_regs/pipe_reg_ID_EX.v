@@ -1,4 +1,4 @@
-// ID/EX pipeline register: carries all control signals and data from decode stage
+// ID/EX pipeline register
 module pipe_reg_ID_EX (
     input         clk, rst, flush, stall,
     // Control inputs
