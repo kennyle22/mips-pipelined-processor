@@ -1,4 +1,3 @@
-// EX/MEM pipeline register
 module pipe_reg_EX_MEM (
     input         clk, rst, flush, stall,
     // Control inputs
