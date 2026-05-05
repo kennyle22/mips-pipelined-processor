@@ -1,4 +1,3 @@
-// MEM/WB pipeline register
 module pipe_reg_MEM_WB (
     input         clk, rst, flush, stall,
     // Control inputs
